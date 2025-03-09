@@ -1,207 +1,126 @@
-# ☕ Cafe & Wifi API
+# ☕️ Cafe & Wifi API Project
 
-This repository contains a **Flask-based API** for exploring and managing a list of cafes. Each cafe includes details such as location, seating, WiFi availability, coffee price, and more. 
+Welcome to the **Cafe & Wifi API Project**! This is a simple but powerful Flask-based RESTful API that manages data about cafes. You can easily add, update, retrieve, and delete cafe records. Each cafe entry includes useful information like its name, location, wifi availability, coffee prices, seating, and more.
 
----
+## 📂 Project Structure
 
-## 📂 Project Files
+Here's what each file in the project does:
 
-### 🔹 `main.py`
-- Core Flask application.
-- Defines routes for **GET, POST, PATCH, and DELETE** operations.
-- Connects to the SQLite database (`cafes.db`) using **SQLAlchemy**.
-- Implements endpoints such as:
-  - `/random` → Returns a random cafe.
-  - `/all` → Returns all cafes in JSON format.
-  - `/search?loc=YourLocation` → Searches for cafes by location.
-  - `/add` → Adds a new cafe (requires form data).
-  - `/update-price/<cafe_id>` → Updates the coffee price.
-  - `/report-closed/<cafe_id>` → Deletes a cafe from the database.
+- **main.py**:
+  - Main Flask app containing all API endpoints.
+  - Handles HTTP methods: GET, POST, PATCH, DELETE.
 
-### 🔹 `requirements.txt`
-- Lists all dependencies needed for the project.
-- Install dependencies with:
-  ```sh
-  pip install -r requirements.txt
+- **requirements.txt**:
+  - Contains a list of Python packages used in the project.
+  - Use this file to quickly set up your Python environment.
 
-🔹 index.html
-	•	A simple landing page displaying API information.
+- **cafes.db**:
+  - SQLite database holding cafe details.
+  - Fields include name, map URL, image URL, location, seating, wifi, sockets, toilets, phone call permissions, and coffee price.
 
-🔹 contact.html
-	•	A placeholder contact page.
+- **index.html / contact.html**:
+  - Basic web pages providing project information or contact forms.
 
-🔹 cafes.db
-	•	SQLite database storing cafe records with fields such as:
-	•	name, map_url, img_url, location, seats, has_wifi, has_toilet, coffee_price, etc.
+- **styles.css**:
+  - Contains CSS for basic page styling.
 
-🔹 styles.css
-	•	Contains CSS styles for the web pages.
+- **Procfile**:
+  - Helps deploy the application on services like Heroku or Render.
 
-🔹 Procfile (if present)
-	•	Required for deployment on platforms like Render.
-	•	Specifies how to start the Flask application using gunicorn.
+- **.env**:
+  - Used to store environment variables like secret keys.
 
-🔹 .env & .gitignore
-	•	.env: Stores environment variables like secret keys.
-	•	.gitignore: Excludes unnecessary files from version control.
+- **.gitignore**:
+  - Specifies files/folders that Git should ignore.
 
-⸻
+## 🚀 Getting Started
 
-🚀 How to Run the API
+Follow these steps to set up and run the project:
 
-1️⃣ Clone the Repository
+### 1. Clone the Repository
 
-git clone https://github.com/your-username/cafe-api.git
-cd cafe-api
+```bash
+git clone <your-repo-url>
+cd cafe-api-project
+```
 
-2️⃣ Create and Activate a Virtual Environment
-	•	Windows:
+### 2. Create and Activate a Virtual Environment
 
+- **Windows**:
+
+```bash
 python -m venv venv
 venv\Scripts\activate
+```
 
+- **macOS/Linux**:
 
-	•	Mac/Linux:
-
+```bash
 python3 -m venv venv
 source venv/bin/activate
+```
 
+### 3. Install Dependencies
 
-
-3️⃣ Install Dependencies
-
+```bash
 pip install -r requirements.txt
+```
 
-4️⃣ Run the Flask Application
+### 4. Run the App
 
+```bash
 python main.py
+```
 
-	•	By default, the app runs at http://127.0.0.1:5000
+Your app will now be running at `http://127.0.0.1:5000`
 
-⸻
+## 📌 API Endpoints
 
-🔥 API Endpoints & Usage
+### GET Endpoints
+- `/random` – Fetches a random cafe from the database.
+- `/all` – Lists all cafes.
+- `/search?loc=<location>` – Searches cafes by location.
 
-🔹 Get a Random Cafe
+### POST Endpoint
+- `/add` – Adds a new cafe.
 
-Request:
+### PATCH Endpoint
+- `/update-price/<cafe_id>?new_price=$<price>` – Updates the coffee price of a cafe.
 
-GET /random
+### DELETE Endpoint
+- `/report-closed/<cafe_id>` – Deletes a cafe.
 
-Response:
+## 📚 Usage Examples
 
-{
-  "name": "Cafe XYZ",
-  "location": "New York",
-  "coffee_price": "$3.50",
-  "has_wifi": true
-}
+- **Get Random Cafe:**
+  ```
+  GET /random
+  ```
 
-🔹 Get All Cafes
+- **Add Cafe:**
+  ```
+  POST /add
+  name=My Cafe
+  map_url=...
+  has_wifi=True
+  ```
 
-Request:
+- **Update Coffee Price:**
+  ```
+  PATCH /update-price/1?new_price=$2.99
+  ```
 
-GET /all
+## 🐞 Troubleshooting
 
-Response:
+- Ensure all dependencies are installed properly.
+- If deploying online (e.g., Heroku or Render), ensure a `Procfile` exists with the correct web command, typically:
+  ```bash
+  web: gunicorn main:app
+  ```
 
-[
-  {
-    "id": 1,
-    "name": "Cafe ABC",
-    "location": "Los Angeles",
-    "coffee_price": "$4.00"
-  },
-  {
-    "id": 2,
-    "name": "Cafe XYZ",
-    "location": "New York",
-    "coffee_price": "$3.50"
-  }
-]
+## 🤝 Contributing
 
-🔹 Search Cafes by Location
-
-Request:
-
-GET /search?loc=New York
-
-Response:
-
-{
-  "name": "Cafe XYZ",
-  "location": "New York",
-  "coffee_price": "$3.50"
-}
-
-🔹 Add a New Cafe
-
-Request:
-
-POST /add
-Content-Type: application/x-www-form-urlencoded
-
-Form Data:
-
-name=Cafe New
-map_url=https://maps.google.com/xyz
-img_url=https://imageurl.com/cafe.jpg
-location=San Francisco
-seats=30
-has_wifi=True
-has_sockets=False
-can_take_calls=True
-coffee_price=$4.50
-
-Response:
-
-{
-  "success": "Cafe added successfully."
-}
-
-🔹 Update Coffee Price
-
-Request:
-
-PATCH /update-price/1?new_price=$5.00
-
-Response:
-
-{
-  "success": "Coffee price updated."
-}
-
-🔹 Delete a Cafe
-
-Request:
-
-DELETE /report-closed/2
-
-Response:
-
-{
-  "success": "Cafe deleted successfully."
-}
-
-
-
-⸻
-
-🛠️ Troubleshooting
-	•	Error: email_validator missing?
-
-pip install email_validator
-
-
-	•	Deployment Issues?
-	•	Ensure the Procfile is correctly set (web: gunicorn main:app).
-	•	Check that PORT is set in Render/Heroku settings.
-
-⸻
-
-🤝 Contributing
-	1.	Fork the repository.
-	2.	Create a feature branch (git checkout -b feature-name).
-	3.	Commit changes (git commit -m "Add feature").
-	4.	Push to the branch (git push origin feature-name).
-	5.	Open a pull request.
+Contributions are welcome! Feel free to:
+- Fork the repo.
+- Open issues.
+- Submit pull requests.
